@@ -1,0 +1,168 @@
+.hero-section {
+  background-color: #FFF8F6;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 48px;
+  overflow: hidden;
+}
+
+.hero-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 580px;
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 900;
+  color: #9A4600;
+  margin: 0 0 16px 0;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+}
+
+.hero-subtitle {
+  font-size: 24px;
+  font-weight: 750;
+  color: #564338;
+  margin: 0 0 24px 0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: inline-block;
+  border-bottom: 3px solid #9A4600;
+  padding-bottom: 4px;
+}
+
+.hero-description {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #705e54;
+  margin: 0 0 40px 0;
+}
+
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #9A4600;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  box-shadow: 0 4px 14px rgba(154, 70, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-sizing: border-box;
+}
+
+.hero-cta:hover {
+  background-color: #b55300;
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(154, 70, 0, 0.4);
+}
+
+.hero-cta:active {
+  transform: scale(0.98);
+}
+
+.rocket-icon {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.hero-cta:hover .rocket-icon {
+  transform: translate(3px, -3px);
+}
+
+/* Right Side Illustration */
+.hero-illustration {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 480px;
+}
+
+.illustration-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.burger-svg {
+  width: 100%;
+  height: auto;
+  animation: floatBurger 6s ease-in-out infinite;
+  filter: drop-shadow(0 12px 24px rgba(154, 70, 0, 0.15));
+}
+
+/* Subtle Floating Animation */
+@keyframes floatBurger {
+  0% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(1.5deg);
+  }
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 968px) {
+  .hero-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+    order: 2;
+  }
+
+  .hero-subtitle {
+    margin: 0 auto 24px auto;
+  }
+
+  .hero-illustration {
+    max-width: 320px;
+    order: 1;
+  }
+
+  .hero-title {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 24px 20px;
+  }
+
+  .hero-title {
+    font-size: 32px;
+  }
+
+  .hero-subtitle {
+    font-size: 18px;
+  }
+
+  .hero-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 14px 28px;
+  }
+}

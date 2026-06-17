@@ -19,6 +19,7 @@ export const registerGuru = async (payload) => {
   return res.data
 }
 
+// belum ada endpoint ygy
 export const logout = () => {
   localStorage.removeItem('token')
 }

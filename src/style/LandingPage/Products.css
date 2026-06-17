@@ -1,0 +1,141 @@
+.products-section {
+  background-color: #FFFDFB;
+  padding: 80px 48px;
+}
+
+.products-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.products-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #9A4600;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  background-color: #FFF8F6;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(154, 70, 0, 0.04);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(154, 70, 0, 0.08);
+}
+
+.product-image-container {
+  background-color: #FFF1EB;
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease;
+}
+
+.product-card:hover .product-image-container {
+  background-color: #FFE5D9;
+}
+
+.product-svg {
+  width: 130px;
+  height: 130px;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-svg {
+  transform: scale(1.08);
+}
+
+.product-info {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-kantin {
+  font-size: 13px;
+  font-weight: 600;
+  color: #241914;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.product-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #241914;
+  margin: 0 0 20px 0;
+  line-height: 1.4;
+  flex-grow: 1;
+}
+
+.product-btn {
+  display: block;
+  text-align: center;
+  background-color: #F3DED5;
+  color: #564338;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.15s;
+}
+
+.product-btn:hover {
+  background-color: #E6CEBF;
+  transform: scale(1.02);
+}
+
+.product-btn:active {
+  transform: scale(0.98);
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .products-section {
+    padding: 60px 20px;
+  }
+
+  .products-title {
+    font-size: 28px;
+    margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .products-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .product-svg {
+    width: 110px;
+    height: 110px;
+  }
+}

@@ -12,9 +12,9 @@ import DashboardPedagang from '../pages/DashboardPedagang'
 import DashboardAdmin from '../pages/DashboardAdmin'
 
 const MainLayout = () => (
-    <MainLayout>
+    <div>
         <Outlet />
-    </MainLayout>
+    </div>
 )
 
 const AppLayout = () => (
