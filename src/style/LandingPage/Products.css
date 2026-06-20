@@ -40,7 +40,9 @@
 
 .product-image-container {
   background-color: #FFF1EB;
-  padding: 24px 0;
+  height: 180px;
+  width: 100%;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +51,17 @@
 
 .product-card:hover .product-image-container {
   background-color: #FFE5D9;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.08);
 }
 
 .product-svg {

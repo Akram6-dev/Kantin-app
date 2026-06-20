@@ -1,7 +1,7 @@
-import Navbar from '../components/pages/landingpage/Navbar'
-import Hero from '../components/pages/landingpage/Hero'
-import Products from '../components/pages/landingpage/Products'
-import Footer from '../components/pages/landingpage/Footer'
+import Navbar from '../components/pages-com/landingpage/Navbar'
+import Hero from '../components/pages-com/landingpage/Hero'
+import Products from '../components/pages-com/landingpage/Products'
+import Footer from '../components/common/Footer'
 
 function LandingPage() {
   return (

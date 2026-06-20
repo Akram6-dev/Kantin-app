@@ -1,0 +1,111 @@
+.dashboard-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: grid;
+  grid-template-columns: auto minmax(220px, 520px) auto;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  padding: 18px clamp(20px, 5vw, 56px);
+  background: rgba(255, 248, 246, 0.94);
+  border-bottom: 1px solid rgba(154, 70, 0, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.dashboard-navbar-brand {
+  color: #9A4600;
+  font-size: 18px;
+  font-weight: 900;
+  letter-spacing: 0;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.dashboard-navbar-search {
+  justify-self: center;
+  width: 100%;
+}
+
+.dashboard-navbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dashboard-user-name {
+  max-width: 160px;
+  overflow: hidden;
+  color: #241914;
+  font-size: 14px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dashboard-profile-button,
+.dashboard-notification-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  cursor: pointer;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.dashboard-profile-button {
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 10px 24px rgba(36, 25, 20, 0.1);
+  color: #9A4600;
+  font-weight: 850;
+}
+
+.dashboard-profile-button img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dashboard-notification-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: transparent;
+  color: #564338;
+}
+
+.dashboard-profile-button:hover,
+.dashboard-notification-button:hover {
+  transform: translateY(-2px);
+  background: #FFFFFF;
+  box-shadow: 0 12px 28px rgba(154, 70, 0, 0.16);
+}
+
+@media (max-width: 860px) {
+  .dashboard-navbar {
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    padding: 16px 18px;
+  }
+
+  .dashboard-navbar-search {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
+@media (max-width: 520px) {
+  .dashboard-user-name {
+    display: none;
+  }
+
+  .dashboard-navbar-brand {
+    font-size: 16px;
+  }
+}

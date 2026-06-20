@@ -1,0 +1,85 @@
+.kantin-list {
+  display: flex;
+  gap: 18px;
+  width: 100%;
+  overflow-x: auto;
+  padding: 4px 4px 14px;
+  scroll-snap-type: x proximity;
+}
+
+.kantin-list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.kantin-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(154, 70, 0, 0.22);
+}
+
+.kantin-card {
+  flex: 0 0 176px;
+  min-height: 188px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border: 1px solid rgba(154, 70, 0, 0.08);
+  border-radius: 26px;
+  background: #FFFFFF;
+  color: #241914;
+  cursor: pointer;
+  box-shadow: 0 16px 34px rgba(36, 25, 20, 0.08);
+  scroll-snap-align: start;
+  transition: transform 190ms ease, box-shadow 190ms ease, border-color 190ms ease;
+}
+
+.kantin-card:hover {
+  border-color: rgba(154, 70, 0, 0.2);
+  box-shadow: 0 22px 42px rgba(154, 70, 0, 0.14);
+  transform: translateY(-5px) scale(1.02);
+}
+
+.kantin-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 86px;
+  height: 86px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #FFF8F6;
+  color: #9A4600;
+  font-size: 28px;
+  font-weight: 900;
+  box-shadow: inset 0 0 0 6px rgba(154, 70, 0, 0.06);
+}
+
+.kantin-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kantin-card h3 {
+  max-width: 132px;
+  margin: 0;
+  color: #241914;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .kantin-card {
+    flex-basis: 150px;
+    min-height: 168px;
+    border-radius: 22px;
+  }
+
+  .kantin-avatar {
+    width: 74px;
+    height: 74px;
+  }
+}
