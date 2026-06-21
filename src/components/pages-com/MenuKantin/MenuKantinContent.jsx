@@ -1,38 +1,37 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import NavbarPembeli from '../../common/NavbarPembeli'
-import KantinSection from './KantinSection'
-import MakananSection from './MakananSection'
-import CartFloatingButton from '../../common/CartFloatingButton'
-import ProductModal from '../../common/ProductModal'
-import CartModal from '../../common/CartModal'
 import Footer from '../../common/Footer'
+import ProductCard from '../../common/ProductCard'
+import ProductModal from '../../common/ProductModal'
+import CartFloatingButton from '../../common/CartFloatingButton'
+import CartModal from '../../common/CartModal'
+import LoadingSkeleton from '../../common/LoadingSkeleton'
+import HeaderKantin from './HeaderKantin'
 import { getMe } from '../../../services/AuthService'
 import {
   addToCart,
   clearCart,
   getCart,
   getProducts,
+  getStandById,
   getStands,
   removeCartItem,
   updateCartItem,
 } from '../../../services/PembeliService'
-import '../../../style/dashboardpembeli/dashboard.css'
-import '../../../style/dashboardpembeli/kantin.css'
-import '../../../style/dashboardpembeli/makanan.css'
+import '../../../styles/menuKantin.css'
 
-const ITEMS_PER_PAGE = 10
+function MenuKantinContent() {
+  const navigate = useNavigate()
+  const { id } = useParams()
 
-function DashboardPembeliContent() {
   const [user, setUser] = useState(null)
+  const [kantin, setKantin] = useState(null)
   const [kantins, setKantins] = useState([])
   const [products, setProducts] = useState([])
   const [search, setSearch] = useState('')
   const [debouncedSearch, setDebouncedSearch] = useState('')
-  const [page, setPage] = useState(1)
-  const [productTotalPages, setProductTotalPages] = useState(1)
-  const [usesApiPagination, setUsesApiPagination] = useState(false)
-  const [loadingUser, setLoadingUser] = useState(true)
-  const [loadingKantins, setLoadingKantins] = useState(true)
+  const [loadingKantin, setLoadingKantin] = useState(true)
   const [loadingProducts, setLoadingProducts] = useState(true)
   const [loadingCart, setLoadingCart] = useState(false)
   const [kantinError, setKantinError] = useState('')
@@ -44,6 +43,10 @@ function DashboardPembeliContent() {
   const [quantity, setQuantity] = useState(1)
   const [modalProductOpen, setModalProductOpen] = useState(false)
   const [cartModalOpen, setCartModalOpen] = useState(false)
+
+  const kantinIndex = kantins.findIndex((entry) => String(entry.id) === String(id))
+  const kantinLabel = kantinIndex >= 0 ? `Kantin ${kantinIndex + 1}` : kantin?.nama_stand || 'Kantin'
+  const menuTitle = kantinIndex >= 0 ? `Menu Kantin ${kantinIndex + 1}` : `Menu ${kantinLabel}`
 
   const getErrorMessage = (error, fallback) => {
     return error?.response?.data?.message || error?.message || fallback
@@ -65,10 +68,13 @@ function DashboardPembeliContent() {
     return []
   }
 
+  const normalizeSingle = (response) => {
+    return response?.data || response || null
+  }
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(search.trim())
-      setPage(1)
     }, 350)
 
     return () => clearTimeout(timer)
@@ -83,8 +89,6 @@ function DashboardPembeliContent() {
         if (active) setUser(response?.data || null)
       } catch {
         if (active) setUser(null)
-      } finally {
-        if (active) setLoadingUser(false)
       }
     }
 
@@ -99,15 +103,11 @@ function DashboardPembeliContent() {
     let active = true
 
     const fetchKantins = async () => {
-      setLoadingKantins(true)
-      setKantinError('')
       try {
         const response = await getStands()
         if (active) setKantins(normalizeItems(response))
-      } catch (error) {
-        if (active) setKantinError(getErrorMessage(error, 'Gagal memuat daftar kantin.'))
-      } finally {
-        if (active) setLoadingKantins(false)
+      } catch {
+        if (active) setKantins([])
       }
     }
 
@@ -121,34 +121,51 @@ function DashboardPembeliContent() {
   useEffect(() => {
     let active = true
 
+    const fetchKantin = async () => {
+      setLoadingKantin(true)
+      setKantinError('')
+      try {
+        const response = await getStandById(id)
+        if (active) setKantin(normalizeSingle(response))
+      } catch (error) {
+        if (active) setKantinError(getErrorMessage(error, 'Gagal memuat informasi kantin.'))
+      } finally {
+        if (active) setLoadingKantin(false)
+      }
+    }
+
+    if (id) fetchKantin()
+
+    return () => {
+      active = false
+    }
+  }, [id])
+
+  useEffect(() => {
+    let active = true
+
     const fetchProducts = async () => {
       setLoadingProducts(true)
       setProductError('')
       try {
         const response = await getProducts({
+          stand_id: id,
           search: debouncedSearch || undefined,
-          page,
-          per_page: ITEMS_PER_PAGE,
         })
-        if (active) {
-          const pagination = response?.data?.pagination
-          setProducts(normalizeItems(response))
-          setUsesApiPagination(Boolean(pagination?.total_page))
-          setProductTotalPages(Number(pagination?.total_page || 1))
-        }
+        if (active) setProducts(normalizeItems(response))
       } catch (error) {
-        if (active) setProductError(getErrorMessage(error, 'Gagal memuat makanan kantin.'))
+        if (active) setProductError(getErrorMessage(error, 'Gagal memuat menu kantin.'))
       } finally {
         if (active) setLoadingProducts(false)
       }
     }
 
-    fetchProducts()
+    if (id) fetchProducts()
 
     return () => {
       active = false
     }
-  }, [debouncedSearch, page])
+  }, [id, debouncedSearch])
 
   const refreshCart = async () => {
     setLoadingCart(true)
@@ -160,19 +177,6 @@ function DashboardPembeliContent() {
     } finally {
       setLoadingCart(false)
     }
-  }
-
-  const totalPages = usesApiPagination
-    ? Math.max(1, productTotalPages)
-    : Math.max(1, Math.ceil(products.length / ITEMS_PER_PAGE))
-  const paginatedProducts = useMemo(() => {
-    if (usesApiPagination) return products
-    const startIndex = (page - 1) * ITEMS_PER_PAGE
-    return products.slice(startIndex, startIndex + ITEMS_PER_PAGE)
-  }, [products, page, usesApiPagination])
-
-  const handleNextPage = () => {
-    setPage((currentPage) => (currentPage < totalPages ? currentPage + 1 : currentPage))
   }
 
   const handleAddToCart = async (product, itemQuantity = 1) => {
@@ -230,33 +234,48 @@ function DashboardPembeliContent() {
   }
 
   return (
-    <div className="dashboard-pembeli-page">
-      <NavbarPembeli
-        user={user}
-        searchValue={search}
-        onSearchChange={setSearch}
-      />
+    <div className="menu-kantin-page">
+      <NavbarPembeli user={user} searchValue={search} onSearchChange={setSearch} />
 
-      <main className="dashboard-main">
-        <section className="dashboard-hero">
-          <p className="dashboard-kicker">Pre-order cepat untuk jam istirahat</p>
-          <h1>Kantin Sekolah</h1>
-        </section>
+      <main className="menu-kantin-main">
+        <button className="menu-kantin-back" type="button" onClick={() => navigate('/Pembeli')}>
+          ← Kembali
+        </button>
 
-        <KantinSection kantins={kantins} loading={loadingKantins} error={kantinError} />
+        {loadingKantin && <LoadingSkeleton variant="header" />}
+        {!loadingKantin && !kantinError && (
+          <HeaderKantin kantin={kantin} kantinIndex={kantinIndex} loading={loadingKantin} />
+        )}
+        {!loadingKantin && kantinError && (
+          <p className="menu-kantin-state menu-kantin-state-error">{kantinError}</p>
+        )}
 
-        <MakananSection
-          makanan={paginatedProducts}
-          loading={loadingProducts}
-          error={productError}
-          page={page}
-          totalPages={totalPages}
-          onNextPage={handleNextPage}
-          onAddToCart={handleAddToCart}
-          onOpenProduct={handleOpenProduct}
-          addingProductId={addingProductId}
-          cartMessage={cartMessage}
-        />
+        <h2 className="menu-kantin-title">{menuTitle}</h2>
+
+        {cartMessage && <p className="menu-kantin-message">{cartMessage}</p>}
+
+        <div className="menu-kantin-content" aria-busy={loadingProducts}>
+          {loadingProducts && <LoadingSkeleton count={8} />}
+          {!loadingProducts && productError && (
+            <p className="menu-kantin-state menu-kantin-state-error">{productError}</p>
+          )}
+          {!loadingProducts && !productError && products.length === 0 && (
+            <p className="menu-kantin-state">Menu belum tersedia untuk kantin ini.</p>
+          )}
+          {!loadingProducts && !productError && products.length > 0 && (
+            <div className="makanan-grid">
+              {products.map((item) => (
+                <ProductCard
+                  key={item.id}
+                  makanan={item}
+                  onAddToCart={handleAddToCart}
+                  onOpenDetail={handleOpenProduct}
+                  adding={addingProductId === item.id}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </main>
 
       <CartFloatingButton onClick={handleOpenCart} />
@@ -286,4 +305,4 @@ function DashboardPembeliContent() {
   )
 }
 
-export default DashboardPembeliContent
+export default MenuKantinContent

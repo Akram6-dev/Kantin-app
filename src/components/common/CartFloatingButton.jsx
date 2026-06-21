@@ -1,4 +1,6 @@
-function FloatingCartButton({ onClick }) {
+import '../../styles/cartModal.css'
+
+function CartFloatingButton({ onClick }) {
   return (
     <button className="floating-cart-button" type="button" onClick={onClick} aria-label="Buka keranjang">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -16,4 +18,4 @@ function FloatingCartButton({ onClick }) {
   )
 }
 
-export default FloatingCartButton
+export default CartFloatingButton

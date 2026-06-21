@@ -1,4 +1,6 @@
-function MakananCard({ makanan, onAddToCart, onOpenDetail, adding }) {
+import '../../styles/productCard.css'
+
+function ProductCard({ makanan, onAddToCart, onOpenDetail, adding }) {
   const image = makanan?.foto_url || makanan?.image_url || makanan?.gambar_url
   const isUnavailable = makanan?.stok === 0 || makanan?.status_stok === 'Out of Stock'
 
@@ -59,4 +61,4 @@ function MakananCard({ makanan, onAddToCart, onOpenDetail, adding }) {
   )
 }
 
-export default MakananCard
+export default ProductCard

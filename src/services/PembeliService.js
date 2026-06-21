@@ -35,6 +35,29 @@ export const getStands = async () => {
   return res.data
 }
 
+export const getStandById = async (id) => {
+  if (USE_MOCK) {
+    const stand = mockStands.find((entry) => entry.id === parseInt(id, 10))
+    if (!stand) return mockErr('Kantin tidak ditemukan', 404)
+    return mockRes(stand)
+  }
+
+  try {
+    const res = await api.get(`/products/stands/${id}`)
+    return res.data
+  } catch (error) {
+    try {
+      const listRes = await api.get('/products/stands')
+      const data = listRes.data?.data || listRes.data?.items || listRes.data || []
+      const stand = data.find((entry) => String(entry.id) === String(id))
+      if (stand) return { data: stand }
+    } catch {
+      // keep original error
+    }
+    throw error
+  }
+}
+
 // Cart
 export const getCart = async () => {
   if (USE_MOCK) return mockRes(_cart)

@@ -1,3 +1,7 @@
+import '../../styles/productModal.css'
+import '../../styles/cartModal.css'
+import QuantityButton from './QuantityButton'
+
 function CartModal({
   items,
   products,
@@ -52,15 +56,13 @@ function CartModal({
                   <h3>{item.nama_produk}</h3>
                   <span>{formatPrice(item.harga)}</span>
                 </div>
-                <div className="quantity-control cart-quantity-control">
-                  <button type="button" onClick={() => onUpdateQuantity(item, qty - 1)}>
-                    -
-                  </button>
-                  <span>{qty}</span>
-                  <button type="button" onClick={() => onUpdateQuantity(item, qty + 1)}>
-                    +
-                  </button>
-                </div>
+                <QuantityButton
+                  className="cart-quantity-control"
+                  value={qty}
+                  min={0}
+                  onDecrease={() => onUpdateQuantity(item, qty - 1)}
+                  onIncrease={() => onUpdateQuantity(item, qty + 1)}
+                />
                 <strong className="cart-item-total">{formatPrice(itemTotal)}</strong>
               </article>
             )

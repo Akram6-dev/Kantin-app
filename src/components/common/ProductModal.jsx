@@ -1,4 +1,7 @@
-function ProductDetailModal({
+import '../../styles/productModal.css'
+import QuantityButton from './QuantityButton'
+
+function ProductModal({
   product,
   kantins,
   quantity,
@@ -56,18 +59,13 @@ function ProductDetailModal({
               <span>Total Harga</span>
               <strong>{formatPrice(totalPrice)}</strong>
             </div>
-            <div className="quantity-control">
-              <button type="button" onClick={() => onQuantityChange(Math.max(1, quantity - 1))}>
-                -
-              </button>
-              <span>{quantity}</span>
-              <button
-                type="button"
-                onClick={() => onQuantityChange(Math.min(product.stok || quantity + 1, quantity + 1))}
-              >
-                +
-              </button>
-            </div>
+            <QuantityButton
+              value={quantity}
+              min={1}
+              max={product.stok || undefined}
+              onDecrease={() => onQuantityChange(Math.max(1, quantity - 1))}
+              onIncrease={() => onQuantityChange(Math.min(product.stok || quantity + 1, quantity + 1))}
+            />
           </div>
 
           <div className="product-modal-actions">
@@ -89,4 +87,4 @@ function ProductDetailModal({
   )
 }
 
-export default ProductDetailModal
+export default ProductModal

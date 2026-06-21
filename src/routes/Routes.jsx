@@ -9,7 +9,7 @@ import Register from '../pages/Register'
 import DashboardPembeli from '../pages/DashboardPembeli'
 import DashboardPedagang from '../pages/DashboardPedagang'
 import DashboardAdmin from '../pages/DashboardAdmin'
-import MenuKantin from '../pages/HalamanMenuKantin'
+import MenuKantin from '../pages/MenuKantin'
 import Profil from '../pages/Profil'
 
 const MainLayout = () => (

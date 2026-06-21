@@ -1,4 +1,5 @@
-import MakananCard from './MakananCard'
+import ProductCard from '../../common/ProductCard'
+import LoadingSkeleton from '../../common/LoadingSkeleton'
 
 function MakananSection({
   makanan,
@@ -20,7 +21,7 @@ function MakananSection({
       </div>
 
       <div className="makanan-content" aria-busy={loading}>
-        {loading && <p className="dashboard-state">Memuat makanan kantin...</p>}
+        {loading && <LoadingSkeleton count={8} />}
         {!loading && error && <p className="dashboard-state dashboard-state-error">{error}</p>}
         {!loading && !error && makanan.length === 0 && (
           <p className="dashboard-state">Makanan belum tersedia untuk pencarian ini.</p>
@@ -29,7 +30,7 @@ function MakananSection({
           <>
             <div className="makanan-grid">
               {makanan.map((item) => (
-                <MakananCard
+                <ProductCard
                   key={item.id}
                   makanan={item}
                   onAddToCart={onAddToCart}

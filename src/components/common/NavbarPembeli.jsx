@@ -1,3 +1,4 @@
+import '../../styles/navbar.css'
 import { useNavigate } from 'react-router-dom'
 import SearchBar from './SearchBar'
 

@@ -1,0 +1,121 @@
+.menu-kantin-page {
+  min-height: 100vh;
+  background: #FFF8F6;
+  color: #241914;
+  font-family: Inter, Outfit, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.menu-kantin-main {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 28px 0 96px;
+}
+
+.menu-kantin-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 24px;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 180ms ease;
+}
+
+.menu-kantin-back:hover {
+  opacity: 0.65;
+}
+
+.menu-kantin-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.menu-kantin-avatar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 12px 28px rgba(36, 25, 20, 0.1);
+  color: #9A4600;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.menu-kantin-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu-kantin-name {
+  margin: 0;
+  color: #241914;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.menu-kantin-title {
+  margin: 0 0 22px;
+  color: #9A4600;
+  font-size: clamp(26px, 3.5vw, 36px);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.menu-kantin-content {
+  min-height: 220px;
+}
+
+.menu-kantin-message {
+  margin: 0 0 16px;
+  color: #9A4600;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.menu-kantin-state {
+  width: 100%;
+  margin: 0;
+  padding: 22px 24px;
+  border: 1px solid rgba(154, 70, 0, 0.12);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.72);
+  color: #564338;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.menu-kantin-state-error {
+  color: #9A2500;
+  background: #FFF0EA;
+}
+
+@media (max-width: 768px) {
+  .menu-kantin-main {
+    width: min(100% - 28px, 1180px);
+    padding: 20px 0 88px;
+  }
+
+  .menu-kantin-header {
+    gap: 14px;
+  }
+
+  .menu-kantin-avatar {
+    width: 60px;
+    height: 60px;
+    font-size: 20px;
+  }
+}
